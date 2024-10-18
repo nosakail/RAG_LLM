@@ -26,10 +26,9 @@ function App() {
 
     return (
         <div className="App">
-            <HeaderComponent /> {/* Utiliser le nouveau composant d'en-tête */}
-            <h1>Interroger le Modèle LLM</h1>
-            <PromptVue query={query} setQuery={setQuery} onSubmit={handleSubmit} />
-            <p>Réponse : {response}</p>
+            <HeaderComponent />
+            <h1>Light LLM using RAG Experimentation</h1>
+            <PromptVue query={query} setQuery={setQuery} onSubmit={handleSubmit} response={response} /> 
         </div>
     );
 }
