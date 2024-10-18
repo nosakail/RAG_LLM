@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import HeaderComponent from './Components/HeaderComponent'; 
+import PromptVue from './Components/PromptVue'; 
 
 function App() {
     const [query, setQuery] = useState('');
@@ -7,7 +9,7 @@ function App() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // Envoyer la requête au backend
+        console.log("Envoi de la requête avec le prompt :", query);
         const res = await fetch('http://localhost:8000/api/query_llm/', {
             method: 'POST',
             headers: {
@@ -15,25 +17,21 @@ function App() {
             },
             body: JSON.stringify({ query }),
         });
+
+        console.log("Statut de la réponse :", res.status);
         const data = await res.json();
+        console.log("Données reçues :", data);
         setResponse(data.response || data.error);
     };
 
     return (
         <div className="App">
+            <HeaderComponent /> {/* Utiliser le nouveau composant d'en-tête */}
             <h1>Interroger le Modèle LLM</h1>
-            <form onSubmit={handleSubmit}>
-                <textarea
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Entrez votre texte ici"
-                />
-                <button type="submit">Envoyer</button>
-            </form>
+            <PromptVue query={query} setQuery={setQuery} onSubmit={handleSubmit} />
             <p>Réponse : {response}</p>
         </div>
     );
 }
 
 export default App;
-
